@@ -1,0 +1,30 @@
+{
+  "name": "@twise/repo",
+  "version": "0.5.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ts": "turbo ts",
+    "test": "turbo test"
+  },
+  "devDependencies": {
+    "monoversion": "^1.2.2",
+    "prettier": "^3.3.2",
+    "turbo": "^2.0.6"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "tabWidth": 2,
+    "printWidth": 120,
+    "arrowParens": "avoid",
+    "bracketSameLine": true,
+    "bracketSpacing": false,
+    "trailingComma": "all"
+  },
+  "packageManager": "pnpm@9.5.0+sha256.dbdf5961c32909fb030595a9daa1dae720162e658609a8f92f2fa99835510ca5"
+}
