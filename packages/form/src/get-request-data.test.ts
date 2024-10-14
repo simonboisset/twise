@@ -1,5 +1,5 @@
-import { expect, test } from 'vitest';
-import { getRequestFormData } from './get-request-data';
+import {expect, test} from 'vitest';
+import {extractFormDataFromRequest} from './extract-form-data';
 
 export const createRequestMock = (data: Record<string, string>) => {
   const url = new URL('http://localhost');
@@ -20,7 +20,7 @@ test('shoud get form data', async () => {
     password: 'foo',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(result.name).toBe('simon');
   expect(result.password).toBe('foo');
@@ -31,7 +31,7 @@ test('shoud get form data whit numerical values', async () => {
     id: '1234',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(result.age).toBe('23');
   expect(result.id).toBe('1234');
@@ -44,7 +44,7 @@ test('shoud get form data with nested object', async () => {
     'profile.role': 'SERVER',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(result.name).toBe('joe');
   expect(result.profile?.username).toBe('john');
@@ -59,7 +59,7 @@ test('shoud get form data with deep nested object', async () => {
     'profile.role': 'SERVER',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(result.name).toBe('joe');
   expect(result.profile?.name?.firstname).toBe('john');
@@ -76,7 +76,7 @@ test('shoud get form data with nested array', async () => {
     'tables.5': 'Table 5',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(result.name).toBe('simon');
   expect(Array.isArray(result.tables)).toBeTruthy();
@@ -99,7 +99,7 @@ test('shoud get form data with deep nested array', async () => {
     'tables.3.id': 'table.4.id',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(result.name).toBe('simon');
   expect(Array.isArray(result.tables)).toBeTruthy();
@@ -120,7 +120,7 @@ test('shoud get form data with flat array', async () => {
     '3.id': 'table.4.id',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(Array.isArray(result)).toBeTruthy();
   expect(result?.[0]?.name).toBe('Table 1');
@@ -140,7 +140,7 @@ test('shoud get form data with flat array', async () => {
     '3.id': 'table.4.id',
   });
 
-  const result = await getRequestFormData(request);
+  const result = await extractFormDataFromRequest(request);
 
   expect(Array.isArray(result)).toBeTruthy();
   expect(result?.[0]?.name).toBe('Table 1');
